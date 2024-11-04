@@ -1,0 +1,13 @@
+{
+  "name": "test-valantic",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "shopify theme dev --store test-task-shop.myshopify.com",
+    "pull": "shopify theme pull --store test-task-shop.myshopify.com",
+    "push": "shopify theme push --store test-task-shop.myshopify.com"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
