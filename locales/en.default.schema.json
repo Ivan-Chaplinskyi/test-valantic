@@ -2894,6 +2894,12 @@
         },
         "limit_of_products": {
           "label": "Limit of products"
+        },
+        "columns_desktop": {
+          "label": "Columns desktop"
+        },
+        "columns_mobile": {
+          "label": "Columns mobile"
         }
       }
     },
