@@ -1,0 +1,5 @@
+.recommended-products .loading__spinner {
+    position: static;
+    display: flex;
+    margin: 0 auto;
+}

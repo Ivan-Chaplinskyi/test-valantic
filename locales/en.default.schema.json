@@ -2878,6 +2878,25 @@
         }
       }
     },
+    "recommended-products": {
+      "name": "Product Recommendations",
+      "settings": {
+        "title": {
+          "label": "Title"
+        },
+        "type_of_product": {
+          "label": "Type of product",
+          "options": {
+            "related": "Related",
+            "complementary": "Complementary"
+          },
+          "info": "[Learn more about recommendation intents](https:\/\/shopify.dev\/docs\/storefronts\/themes\/product-merchandising\/recommendations)"
+        },
+        "limit_of_products": {
+          "label": "Limit of products"
+        }
+      }
+    },
     "rich-text": {
       "name": "Rich text",
       "settings": {

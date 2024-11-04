@@ -1,0 +1,110 @@
+{% liquid
+    assign recommend_id = 'recommended-products'
+    assign intent = section.settings.type_of_product
+    assign limit = section.settings.limit_of_products
+    assign section_id = '#shopify-section-' | append: section.id
+    assign title = section.settings.title
+
+    if shop_locale.iso_code
+        assign locale = '/' | append: shop_locale.iso_code
+    endif
+%}
+
+{{ 'recommended-products.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+    {{ section_id }} {
+        padding: 20px 0;
+    }
+{% endstyle %}
+
+<div class="page-width">
+    {%- render 'loading-spinner', class: 'loading__spinner' -%}
+
+    <recommended-products class="hidden"
+    data-section-id="{{ section_id }}"
+    data-url="{{ locale }}/recommendations/products?product_id={{ product.id }}&section_id={{ recommend_id }}&intent={{ intent }}&limit={{ limit }}">
+    {% if title != blank %}
+        <h2>{{ title }}</h2>
+    {% endif %}
+
+    <div id="{{ recommend_id }}">
+    {%- if recommendations.performed? -%}
+        {%- if recommendations.products_count > 0 -%}
+            <ul class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down">
+                {%- for product in recommendations.products -%}
+                    <li class="grid__item">
+                        {%- render 'card-product', 
+                            card_product: product,
+                            media_aspect_ratio: 'square',
+                            image_shape: 'default',
+                            show_secondary_image: true,
+                            show_vendor: false,
+                            show_rating: false,
+                        -%}
+                    </li>
+                {%- endfor -%}
+            </ul>
+        {% else %}
+            <p>{{ 'sections.recommended-products.recommend_empty' | t }}</p>
+        {%- endif -%}
+    {%- endif -%}
+    </div>
+    </recommended-products>
+</div>
+
+{{ 'recommended-products.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+    "name": "t:sections.recommended-products.name",
+    "tag": "section",
+    "class": "recommended-products",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "t:sections.recommended-products.settings.title.label",
+            "default": "You may also like"
+        },
+        {
+            "type": "select",
+            "id": "type_of_product",
+            "label": "t:sections.recommended-products.settings.type_of_product.label",
+            "options": [
+                {
+                    "label": "t:sections.recommended-products.settings.type_of_product.options.related",
+                    "value": "related"
+                },
+                {
+                    "label": "t:sections.recommended-products.settings.type_of_product.options.complementary",
+                    "value": "complementary"
+                }
+            ],
+            "default": "related",
+            "info": "t:sections.recommended-products.settings.type_of_product.info"
+        },
+        {
+            "type": "range",
+            "id": "limit_of_products",
+            "label": "t:sections.recommended-products.settings.limit_of_products.label",
+            "max": 10,
+            "min": 1,
+            "step": 1,
+            "default": 5
+        }
+    ],
+    "enabled_on": {
+        "templates": ["product"]
+    },
+    "presets": [
+        {
+            "name": "t:sections.recommended-products.name",
+            "settings": {
+                "title": "You may also like"
+            }
+        }
+    ]
+}
+{% endschema %}
